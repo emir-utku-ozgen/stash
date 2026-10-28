@@ -19,6 +19,14 @@ function load<T>(key: string, fallback: T): T {
   }
 }
 
+// crypto.randomUUID is missing on older mobile browsers (iOS before 15.4).
+function newUserId(): string {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return crypto.randomUUID().slice(0, 12);
+  }
+  return Math.random().toString(36).slice(2, 8) + Date.now().toString(36).slice(-6);
+}
+
 function save(key: string, value: unknown) {
   try {
     localStorage.setItem(key, JSON.stringify(value));
@@ -44,7 +52,7 @@ export default function Home() {
   useEffect(() => {
     let id = load<string>("stash.userId", "");
     if (!id) {
-      id = crypto.randomUUID().slice(0, 12);
+      id = newUserId();
       save("stash.userId", id);
     }
     setUserId(id);
