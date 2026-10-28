@@ -1,0 +1,103 @@
+@import "tailwindcss";
+
+:root {
+  --paper: #f3f5f9;
+  --sheet: #ffffff;
+  --ink: #14213d;
+  --ink-soft: #55607a;
+  --rule: #d8dee9;
+  --coin: #f2b705;
+  --coin-soft: #fdf3cc;
+  --mind: #5b4bdb;
+  --mind-soft: #ece9ff;
+  --alert: #c2361c;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #0e1422;
+    --sheet: #161e30;
+    --ink: #e8ecf5;
+    --ink-soft: #9aa5bd;
+    --rule: #26314a;
+    --coin: #f5c533;
+    --coin-soft: #3a3214;
+    --mind: #9d92ff;
+    --mind-soft: #25214a;
+    --alert: #ff7a5c;
+  }
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-sheet: var(--sheet);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-rule: var(--rule);
+  --color-coin: var(--coin);
+  --color-coin-soft: var(--coin-soft);
+  --color-mind: var(--mind);
+  --color-mind-soft: var(--mind-soft);
+  --color-alert: var(--alert);
+  --font-display: var(--font-display);
+  --font-sans: var(--font-body);
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+:focus-visible {
+  outline: 2px solid var(--mind);
+  outline-offset: 2px;
+}
+
+/* The one orchestrated motion: a memory card arriving after Stash learns something. */
+@keyframes learned {
+  0% {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+    background: var(--mind-soft);
+  }
+  60% {
+    opacity: 1;
+    transform: none;
+    background: var(--mind-soft);
+  }
+  100% {
+    background: transparent;
+  }
+}
+
+.memory-new {
+  animation: learned 2.4s ease-out;
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.typing span {
+  animation: pulse-dot 1.2s infinite;
+}
+.typing span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.typing span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .memory-new,
+  .typing span {
+    animation: none;
+  }
+}
